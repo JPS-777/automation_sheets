@@ -1,30 +1,44 @@
-# automation_sheets
-The project automates data extraction from Google Sheets in various Drive folders. It iterates through folders containing parliamentary bulletins and agendas, retrieving files modified after a specified date. The data is then appended to a unified database sheet. 
+# Automation Sheets: Streamlined Extraction and Consolidation of Parliamentary Data from Google Drive to BigQuery
+Automation Sheets is a data pipeline designed to automate the extraction, consolidation, and export of parliamentary information—such as bulletins and agendas—stored in Google Sheets across multiple Google Drive folders. The project transforms a fragmented collection of files into a centralized, query-ready database in BigQuery, enabling dynamic visualization and reporting through Looker Studio. It is specifically designed to support Public Affairs teams in monitoring institutional activity more efficiently.
 
-The project focuses on automating the extraction and consolidation of data from Google Sheets stored in multiple folders on Google Drive. Here’s a detailed breakdown of the components and steps involved:
+### Project Objectives
+1. **Automated data retrieval**
+The core function is to automate the discovery and extraction of relevant data from Google Sheets that have been recently modified or added to specific Drive folders. This ensures that only the most current and relevant information is processed.
 
-### Objectives
-1. **Automated data retrieval**: the primary goal is to automate the identification and extraction of specific data from Google Sheets. The focus is on files that have been modified or uploaded after a designated date, ensuring that only the most recent and relevant information is processed.
+2. **Data consolidation**
+Extracted data is appended to a structured master sheet that serves as a centralized database. This unified dataset allows for easier querying, reporting, and cross-referencing of initiatives across categories (e.g., national, regional, legislative agendas).
 
-2. **Data consolidation**: after extraction, the project aims to append this data into a centralized database sheet. This unification of data allows for easier analysis and reporting, as all relevant information is compiled in one location.
-
-3. **Scheduled automation**: to maintain up-to-date data, the project includes the implementation of a weekly trigger. This ensures that the data extraction and consolidation process runs automatically at specified intervals without manual intervention.
+3. **Scheduled execution**
+To keep the database consistently up to date, the pipeline is designed to be run on a scheduled, recurring basis (e.g., weekly) via time-based triggers, eliminating the need for manual execution.
 
 ### Implementation steps
-1. **Google drive integration**: the script is designed to work within Google Colab, utilizing the `gspread` library to interact with Google Sheets. Initially, it mounts the Google Drive to access the required folders and files.
+I. **Google Drive and Colab integration**
+The project is executed in Google Colab, using the gspread library to interface with Google Sheets. It mounts Google Drive to access the relevant folders and reads the content of each file using the Google Sheets API.
 
-2. **Library imports and setup**: essential libraries, such as `pandas` for data manipulation and `oauth2client` for authentication, are imported. The user must set up a Google Cloud project and authenticate access to the Drive files using a JSON credentials file.
+II. **Library imports and setup**
+Libraries, such as `pandas` for data manipulation and `oauth2client` for authentication, are imported. The user must set up a Google Cloud project and authenticate access to the Drive files using a JSON credentials file.
 
-3. **Folder iteration**: the script iterates through specified folders, which contain various types of documents, including:
-   - Parliamentary bulletins
-   - Autonomous bulletins
-   - Parliamentary agendas
 
-   During this iteration, the script checks each file’s last modified date. If a file has been updated after the specified cutoff date, it is marked for extraction.
+III. **Folder structure and iteration logic**
+The script loops through multiple predefined folders in Google Drive, each corresponding to a source type, such as:
 
-4. **Data extraction and appending**: for each identified file, the relevant data is extracted and then appended to the appropriate section of the unified database sheet. This ensures that data from similar categories are grouped together, facilitating better organization and accessibility.
+- Parliamentary bulletins
 
-5. **Trigger setup**: the final component involves establishing a trigger that will automatically execute the script on a weekly basis. This eliminates the need for manual runs, ensuring that the database is continuously updated with the latest information.
+- Regional or autonomous bulletins
 
-### Conclusion
-This project leverages automation to streamline the data extraction and consolidation process from Google Sheets. By focusing on modified files and implementing a systematic approach to data handling, it enhances efficiency and ensures that stakeholders have access to the most current data for analysis and decision-making.
+- Parliamentary agendas
+
+During iteration, the script checks each file’s last modified date and filters in only those updated after a predefined threshold date.
+
+IV. **Data extraction and appending**
+For each eligible file, relevant data is extracted and processed. Depending on the folder or source type, the content is appended to the appropriate tab or section within the unified master sheet. This ensures consistent data structure and categorization.
+
+V. **Export to BigQuery**
+After consolidation, the master dataset is exported to a predefined BigQuery table. This step transforms the sheet-based data into a robust, cloud-based database, optimized for querying and integration with BI tools.
+
+VI. **Dashboard integration**
+The final output is designed to feed into a Looker Studio dashboard, enabling real-time monitoring of legislative activity and generating insights for Public Affairs and institutional stakeholders.
+
+-------------
+### Value for Public Affairs
+This solution significantly reduces the manual workload required to monitor and track institutional documents. It ensures that teams have access to the most up-to-date information, structured in a consistent and queryable format, ready for analysis and visualization. It enhances the strategic capacity of Public Affairs departments by providing timely intelligence in an automated, scalable manner.
