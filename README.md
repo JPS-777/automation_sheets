@@ -1,4 +1,4 @@
-# Automation Sheets: Streamlined Extraction and Consolidation of Parliamentary Data from Google Drive to BigQuery
+# Automation Sheets: streamlined extraction and consolidation of parliamentary data from Google Drive to BigQuery
 Automation Sheets is a data pipeline designed to automate the extraction, consolidation, and export of parliamentary information—such as bulletins and agendas—stored in Google Sheets across multiple Google Drive folders. The project transforms a fragmented collection of files into a centralized, query-ready database in BigQuery, enabling dynamic visualization and reporting through Looker Studio. It is specifically designed to support Public Affairs teams in monitoring institutional activity more efficiently.
 
 ### Project Objectives
